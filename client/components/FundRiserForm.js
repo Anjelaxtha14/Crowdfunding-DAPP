@@ -97,18 +97,18 @@ const FundRiserForm = () => {
           <label className="text-sm text-gray-700">
             Targeted contribution amount :
           </label>
-          <div className="flex items-center border border-neutral-400 rounded-md focus-within:ring-2 focus-within:ring-neutral-200 overflow-hidden">
+          <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
             <input
               type="number"
               placeholder="Type here"
-              className="form-control-input flex-1 border-0 focus:ring-0 focus:outline-none pl-2"
+              className="flex-1 p-2 focus:outline-none focus:ring-0"
               value={targetedContributionAmount}
               onChange={(e) => setTargetedContributionAmount(e.target.value)}
               required
             />
-            <div className="flex items-center gap-1 pr-3 text-gray-600">
-              <FaEthereum size={18} />
-              <span className="font-medium">ETH</span>
+            <div className="flex items-center gap-1 pl-2 pr-3">
+              <FaEthereum size={18} className="text-indigo-600" />
+              <span className="font-semibold text-gray-700">ETH</span>
             </div>
           </div>
         </div>
@@ -118,18 +118,18 @@ const FundRiserForm = () => {
           <label className="text-sm text-gray-700">
             Minimum contribution amount :
           </label>
-          <div className="flex items-center border border-neutral-400 rounded-md focus-within:ring-2 focus-within:ring-neutral-200 overflow-hidden">
+          <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
             <input
               type="number"
               placeholder="Type here"
-              className="form-control-input flex-1 border-0 focus:ring-0 focus:outline-none pl-2"
+              className="flex-1 p-2 focus:outline-none focus:ring-0"
               value={minimumContributionAmount}
               onChange={(e) => setMinimumContributionAmount(e.target.value)}
               required
             />
-            <div className="flex items-center gap-1 pr-3 text-gray-600">
-              <FaEthereum size={18} />
-              <span className="font-medium">ETH</span>
+            <div className="flex items-center gap-1 pl-2 pr-3">
+              <FaEthereum size={18} className="text-indigo-600" />
+              <span className="font-semibold text-gray-700">ETH</span>
             </div>
           </div>
         </div>
