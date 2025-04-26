@@ -25,8 +25,7 @@ const FundRiserCard = ({props,pushWithdrawRequests}) => {
   const web3 = useSelector(state=>state.web3Reducer.connection)
 
   const contributeAmount = (projectId,minContribution) =>{
-
-    if(amount < minContribution){
+    if(parseFloat(amount) < parseFloat(minContribution)){
       toastError(`Minimum contribution amount is ${minContribution}`);
       return;
     }
