@@ -11,3 +11,6 @@ export const NEW_PROJECT_CONTRACT_LOADED = "NEW_PROJECT_CONTRACT_LOADED";
 export const NEW_PROJECT_LOADED = "NEW_PROJECT_LOADED";
 export const INCREASE_PROGRESS = "INCREASE_PROGRESS";
 export const WITHDRAW_BALANCE = "WITHDRAW_BALANCE";
+
+// Logout
+export const LOGOUT = "LOGOUT"; // New action type for logout

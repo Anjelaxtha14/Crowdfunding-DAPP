@@ -3,7 +3,6 @@ import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
 import Project from '../artifacts/contracts/Project.sol/Project.json'
 import { groupContributionByProject, groupContributors, projectDataFormatter, withdrawRequestDataFormatter} from "../helper/helper";
-
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 //Load web3 
@@ -181,3 +180,14 @@ export const getMyContributionList = async(crowdFundingContract,account) =>{
   })
   return groupContributionByProject(getContributions);
 }
+
+export const logout = async (dispatch) => {
+  // Reset the state by dispatching the logout action
+  dispatch(actions.logout());
+  localStorage.removeItem("ADDRESS"); // Remove the address from local storage
+
+  // Disconnect the wallet (for MetaMask)
+  if (window.ethereum) {
+    window.ethereum.request({ method: "eth_requestAccounts" }).catch(() => {});
+  }
+};

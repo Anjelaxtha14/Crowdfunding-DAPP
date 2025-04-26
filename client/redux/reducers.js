@@ -1,10 +1,12 @@
+// reducer.js
+
 import { combineReducers } from "redux";
 import { weiToEther } from "../helper/helper";
 import * as types from "./types";
+
 const initialState = {};
 
 export const web3Reducer = (state = initialState, action) => {
-  // eslint-disable-next-line default-case
   switch (action.type) {
     case types.WEB3_LOADED:
       return {
@@ -16,6 +18,8 @@ export const web3Reducer = (state = initialState, action) => {
         ...state,
         account: action.payload,
       };
+    case types.LOGOUT: // Handle logout by resetting the state
+      return initialState; // Reset state on logout
     default:
       return state;
   }

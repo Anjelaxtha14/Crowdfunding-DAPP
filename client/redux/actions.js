@@ -9,12 +9,19 @@ export const web3Loaded = (web3) =>{
     }
 }
 
-export const walletAddressLoaded = (address) =>{
-    return{
-        type:types.WALLET_ADDRESS_LOADED,
-        payload:address
-    }
-}
+export const walletAddressLoaded = (address) => {
+  return {
+    type: types.WALLET_ADDRESS_LOADED,
+    payload: address,
+  };
+};
+
+// Logout action
+export const logout = () => {
+  return {
+    type: types.LOGOUT,
+  };
+};
 
 // Crowd funding actions
 

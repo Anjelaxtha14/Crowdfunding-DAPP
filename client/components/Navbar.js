@@ -1,13 +1,20 @@
+// Navbar.js
 import { useState } from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { FaEthereum} from "react-icons/fa";
-
+import { FaEthereum } from "react-icons/fa";
+import { logout } from "../redux/interactions"
 const Navbar = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [openMenu, setOpenMenu] = useState(false);
   const account = useSelector((state) => state.web3Reducer.account);
+
+   const handleLogout = async () => {
+     await logout(dispatch); 
+     router.push("/");
+   };
 
   return (
     <div>
@@ -29,7 +36,8 @@ const Navbar = () => {
                       router.pathname === "/dashboard"
                         ? "border-indigo-500 text-gray-900"
                         : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    } cursor-pointer`}
+                    }`}
+                    cursor-pointer
                   >
                     Dashboard
                   </span>
@@ -40,7 +48,8 @@ const Navbar = () => {
                       router.pathname === "/my-contributions"
                         ? "border-indigo-500 text-gray-900"
                         : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    } cursor-pointer`}
+                    }`}
+                    cursor-pointer
                   >
                     My Contributions
                   </span>
@@ -58,60 +67,26 @@ const Navbar = () => {
                   Start Campaign
                 </button>
               </Link>
+
+              {/* Wallet Address */}
               <div className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1">
-                <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                  {/* Static Wallet Icon (SVG) */}
-                  <svg
-                    className="h-5 w-5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2m4-4h-6m6 0l-2-2m2 2l-2 2"
-                    />
-                  </svg>
-                </div>
                 <span className="text-sm font-medium text-gray-700 truncate max-w-[100px]">
                   {account ? account : "0x123...abcd"}
                 </span>
               </div>
 
-              {/* Mobile Menu Button */}
-              <div className="sm:hidden">
+              {/* Logout Button */}
+              {account && (
                 <button
-                  onClick={() => setOpenMenu(!openMenu)}
-                  type="button"
-                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-indigo-500 hover:bg-gray-100 focus:outline-none"
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
                 >
-                  <i className="fa-solid fa-bars"></i>
+                  Logout
                 </button>
-              </div>
+              )}
             </div>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {openMenu && (
-          <div className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
-              <Link href="/dashboard">
-                <span className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-indigo-700 bg-indigo-50 border-indigo-500 cursor-pointer">
-                  Dashboard
-                </span>
-              </Link>
-              <Link href="/my-contributions">
-                <span className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 cursor-pointer">
-                  My Contributions
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
       </nav>
     </div>
   );
