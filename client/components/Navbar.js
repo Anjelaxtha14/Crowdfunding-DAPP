@@ -47,16 +47,18 @@ const Navbar = () => {
             </div>
 
             {/* Right side */}
-            <div className="flex items-center space-x-4">
-              <button
-                type="button"
-                className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-700 transition"
-              >
-                Start Campaign
-              </button>
-              <div className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1">
-                <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                  {/* Static Wallet Icon (SVG) */}
+                        <div className="flex items-center space-x-4">
+                          <Link href="/campaign">
+                            <button
+                              type="button"
+                              className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-700 transition"
+                            >
+                              Start Campaign
+                            </button>
+                          </Link>
+                          <div className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1">
+                            <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                              {/* Static Wallet Icon (SVG) */}
                   <svg
                     className="h-5 w-5 text-gray-600"
                     fill="none"
