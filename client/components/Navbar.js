@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { FaEthereum} from "react-icons/fa";
 
 const Navbar = () => {
   const router = useRouter();
@@ -15,7 +16,8 @@ const Navbar = () => {
           <div className="flex justify-between h-16">
             {/* Left side */}
             <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
+              <div className="flex items-center space-x-2">
+                <FaEthereum className="text-indigo-600 text-2xl" />
                 <h1 className="text-2xl font-extrabold text-indigo-600 tracking-tight hidden lg:block">
                   CROWD FUNDING
                 </h1>
@@ -47,18 +49,18 @@ const Navbar = () => {
             </div>
 
             {/* Right side */}
-                        <div className="flex items-center space-x-4">
-                          <Link href="/campaign">
-                            <button
-                              type="button"
-                              className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-700 transition"
-                            >
-                              Start Campaign
-                            </button>
-                          </Link>
-                          <div className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1">
-                            <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                              {/* Static Wallet Icon (SVG) */}
+            <div className="flex items-center space-x-4">
+              <Link href="/campaign">
+                <button
+                  type="button"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-700 transition"
+                >
+                  Start Campaign
+                </button>
+              </Link>
+              <div className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1">
+                <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                  {/* Static Wallet Icon (SVG) */}
                   <svg
                     className="h-5 w-5 text-gray-600"
                     fill="none"
