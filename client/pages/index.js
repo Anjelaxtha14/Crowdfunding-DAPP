@@ -55,79 +55,15 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-white">
-      {/* Header */}
-      <header className="flex items-center justify-between px-8 py-4 bg-indigo-600">
+      <header className="flex items-center justify-between px-4 md:px-8 py-4 bg-indigo-600">
         <div className="flex items-center text-white text-2xl font-bold">
-          <FaEthereum className="mr-2" />
+          <FaEthereum className="mr-2 text-3xl" />
           Crowd Funding
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="flex flex-col md:flex-row items-center justify-center px-8 py-8">
-        {/* Left Content */}
-        {/* Left Content */}
-        <div className="md:w-1/2 flex flex-col items-start justify-center space-y-6">
-          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
-            Empower Your Ideas with Blockchain
-          </h2>
-          <p className="text-gray-700 text-lg">
-            Welcome to our decentralized crowdfunding platform, where innovation
-            meets transparency. Launch your campaigns, raise funds securely, and
-            contribute to projects that matter—all powered by blockchain
-            technology.
-          </p>
-
-          <ul className="list-disc list-inside text-gray-700 text-lg space-y-2">
-            <li>
-              <strong>Global Reach:</strong> Connect with backers worldwide
-              without intermediaries.
-            </li>
-            <li>
-              <strong>Enhanced Transparency:</strong> Track every transaction on
-              the blockchain, ensuring trust and accountability.
-            </li>
-            <li>
-              <strong>Smart Contracts:</strong> Automate fund distribution and
-              milestones with secure, self-executing contracts.
-            </li>
-            <li>
-              <strong>Lower Fees:</strong> Reduce costs by eliminating
-              traditional banking and payment processing fees.
-            </li>
-            <li>
-              <strong>Tokenization:</strong> Offer backers digital tokens
-              representing their stake or rewards in your project.
-            </li>
-          </ul>
-
-          {/* Images Section */}
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <img
-              src="https://images.openai.com/thumbnails/8f0043eb775ccdd677ec4a3fa3b888bd.jpeg"
-              alt="Blockchain Crowdfunding"
-              className="w-full h-48 object-cover rounded-xl shadow-lg"
-            />
-            <img
-              src="https://images.openai.com/thumbnails/8e9c5318f0d5a16157c467d2896bd160.png"
-              alt="Fundraising Blockchain"
-              className="w-full h-48 object-cover rounded-xl shadow-lg"
-            />
-            <img
-              src="https://images.openai.com/thumbnails/c67afc8f13b0ada8c15f4c79ee8e2e40.jpeg"
-              alt="Blockchain Impacts"
-              className="w-full h-48 object-cover rounded-xl shadow-lg"
-            />
-            <img
-              src="https://images.openai.com/thumbnails/87bd730ccd477fabbe8a00b42b4c0f19.jpeg"
-              alt="Ethereum Platform"
-              className="w-full h-48 object-cover rounded-xl shadow-lg"
-            />
-          </div>
-        </div>
-
-        {/* Right Login/Register Form */}
-        <div className="md:w-1/3 w-full mt-12 ml-5 px-5 md:mt-0 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-start justify-center px-4 md:px-8 py-8 space-y-8 md:space-y-0 md:space-x-8">
+        <div className="w-full md:w-1/3 order-1 md:order-2 flex items-center justify-center">
           <div className="bg-white p-8 rounded-2xl shadow-2xl w-full">
             <h3 className="text-2xl font-bold text-indigo-700 mb-6 text-center">
               {isRegister ? "Create Account" : "Welcome Back"}
@@ -186,6 +122,64 @@ export default function Login() {
                 </button>
               </p>
             </form>
+          </div>
+        </div>
+
+        <div className="w-full md:w-2/3 order-2 md:order-1 flex flex-col items-start justify-center space-y-6">
+          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+            Empower Your Ideas with Blockchain
+          </h2>
+          <p className="text-gray-700 text-lg">
+            Welcome to our decentralized crowdfunding platform, where innovation
+            meets transparency. Launch your campaigns, raise funds securely, and
+            contribute to projects that matter—all powered by blockchain
+            technology.
+          </p>
+
+          <ul className="list-disc list-inside text-gray-700 text-lg space-y-2">
+            <li>
+              <strong>Global Reach:</strong> Connect with backers worldwide
+              without intermediaries.
+            </li>
+            <li>
+              <strong>Enhanced Transparency:</strong> Track every transaction on
+              the blockchain, ensuring trust and accountability.
+            </li>
+            <li>
+              <strong>Smart Contracts:</strong> Automate fund distribution and
+              milestones with secure, self-executing contracts.
+            </li>
+            <li>
+              <strong>Lower Fees:</strong> Reduce costs by eliminating
+              traditional banking and payment processing fees.
+            </li>
+            <li>
+              <strong>Tokenization:</strong> Offer backers digital tokens
+              representing their stake or rewards in your project.
+            </li>
+          </ul>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 w-full">
+            <img
+              src="https://images.openai.com/thumbnails/8f0043eb775ccdd677ec4a3fa3b888bd.jpeg"
+              alt="Blockchain Crowdfunding"
+              className="w-full h-48 object-cover rounded-xl shadow-lg"
+            />
+            <img
+              src="https://images.openai.com/thumbnails/8e9c5318f0d5a16157c467d2896bd160.png"
+              alt="Fundraising Blockchain"
+              className="w-full h-48 object-cover rounded-xl shadow-lg"
+            />
+            <img
+              src="https://images.openai.com/thumbnails/c67afc8f13b0ada8c15f4c79ee8e2e40.jpeg"
+              alt="Blockchain Impacts"
+              className="w-full h-48 object-cover rounded-xl shadow-lg"
+            />
+            <img
+              src="https://images.openai.com/thumbnails/87bd730ccd477fabbe8a00b42b4c0f19.jpeg"
+              alt="Ethereum Platform"
+              className="w-full h-48 object-cover rounded-xl shadow-lg"
+            />
           </div>
         </div>
       </div>
