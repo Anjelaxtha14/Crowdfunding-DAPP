@@ -4,7 +4,7 @@ import { startFundRaising } from "../redux/interactions";
 import { useDispatch, useSelector } from "react-redux";
 import { etherToWei } from "../helper/helper";
 import { toastSuccess, toastError } from "../helper/toastMessage";
-import { FaEthereum } from "react-icons/fa"; // ETH icon
+import { FaEthereum, FaPaperPlane } from "react-icons/fa";
 
 const FundRiserForm = () => {
   const crowdFundingContract = useSelector(
@@ -118,68 +118,79 @@ const FundRiserForm = () => {
         </div>
 
         {/* Targeted Contribution */}
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">
-                Targeted Contribution Amount :
-              </label>
-              <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
-                <input
-                  type="number"
-                  placeholder="Enter total funding goal in ETH"
-                  className="flex-1 p-2 focus:outline-none focus:ring-0"
-                  value={targetedContributionAmount}
-                  onChange={(e) => setTargetedContributionAmount(e.target.value)}
-                  onKeyPress={handleInputValidation}
-                  required
-                />
-                <div className="flex items-center gap-1 pl-2 pr-3">
-                  <FaEthereum size={18} className="text-indigo-600" />
-                  <span className="font-semibold text-gray-700">ETH</span>
-                </div>
-              </div>
+        <div className="form-control my-1">
+          <label className="text-sm text-gray-700">
+            Targeted Contribution Amount :
+          </label>
+          <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
+            <input
+              type="number"
+              placeholder="Enter total funding goal in ETH"
+              className="flex-1 p-2 focus:outline-none focus:ring-0"
+              value={targetedContributionAmount}
+              onChange={(e) => setTargetedContributionAmount(e.target.value)}
+              onKeyPress={handleInputValidation}
+              required
+            />
+            <div className="flex items-center gap-1 pl-2 pr-3">
+              <FaEthereum size={18} className="text-indigo-600" />
+              <span className="font-semibold text-gray-700">ETH</span>
             </div>
+          </div>
+        </div>
 
-            {/* Minimum Contribution */}
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">
-                Minimum Contribution Amount :
-              </label>
-              <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
-                <input
-                  type="number"
-                  placeholder="Enter minimum contribution amount in ETH"
-                  className="flex-1 p-2 focus:outline-none focus:ring-0"
-                  value={minimumContributionAmount}
-                  onChange={(e) => setMinimumContributionAmount(e.target.value)}
-                  onKeyPress={handleInputValidation}
-                  required
-                />
-                <div className="flex items-center gap-1 pl-2 pr-3">
-                  <FaEthereum size={18} className="text-indigo-600" />
-                  <span className="font-semibold text-gray-700">ETH</span>
-                </div>
-              </div>
+        {/* Minimum Contribution */}
+        <div className="form-control my-1">
+          <label className="text-sm text-gray-700">
+            Minimum Contribution Amount :
+          </label>
+          <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
+            <input
+              type="number"
+              placeholder="Enter minimum contribution amount in ETH"
+              className="flex-1 p-2 focus:outline-none focus:ring-0"
+              value={minimumContributionAmount}
+              onChange={(e) => setMinimumContributionAmount(e.target.value)}
+              onKeyPress={handleInputValidation}
+              required
+            />
+            <div className="flex items-center gap-1 pl-2 pr-3">
+              <FaEthereum size={18} className="text-indigo-600" />
+              <span className="font-semibold text-gray-700">ETH</span>
             </div>
+          </div>
+        </div>
 
-            <div className="form-control date-picker my-1">
-              <label className="text-sm text-gray-700">Deadline :</label>
-              <input
-                type="date"
-                placeholder="Select campaign end date"
-                className="form-control-input border-neutral-400 focus:ring-neutral-200"
-                value={deadline}
-                onChange={(e) => setDeadline(e.target.value)}
-                required
-                min={today}
-              />
-            </div>
+        <div className="form-control date-picker my-1">
+          <label className="text-sm text-gray-700">Deadline :</label>
+          <input
+            type="date"
+            placeholder="Select campaign end date"
+            className="form-control-input border-neutral-400 focus:ring-neutral-200"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+            required
+            min={today}
+          />
+        </div>
 
-            {/* Submit Button */}
+        {/* Submit Button */}
         <button
-          className="p-2 w-full bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          className="p-2 w-full bg-indigo-600 text-white rounded-md hover:bg-indigo-700 flex items-center justify-center gap-2"
           disabled={btnLoading}
         >
-          {btnLoading ? "Loading..." : "Rise Fund"}
+          {btnLoading ? (
+            <div className="flex items-center">
+              <FaPaperPlane className="animate-spin mr-2" />{" "}
+              {/* Spinning icon for loading */}
+              Loading...
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <FaPaperPlane className="mr-2" /> {/* Icon before the text */}
+              Rise Fund
+            </div>
+          )}
         </button>
       </form>
     </>
