@@ -23,6 +23,7 @@ const FundRiserForm = () => {
     useState("");
   const [deadline, setDeadline] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
+   const today = new Date().toISOString().split("T")[0];
 
   const riseFund = (e) => {
     e.preventDefault();
@@ -91,7 +92,7 @@ const FundRiserForm = () => {
           <label className="text-sm text-gray-700">Title :</label>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Enter your fundraiser title"
             className="form-control-input border-neutral-400 focus:ring-neutral-200"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -104,8 +105,11 @@ const FundRiserForm = () => {
             Description :
           </label>
           <textarea
-            placeholder="Briefly describe your project and how the funds will be used..."
-            rows={4}
+            placeholder="Briefly describe your project and how the funds will be used. Include details about:
+            - What the project aims to achieve
+            - How the funds will be allocated
+            - Timeline and milestones"
+            rows={5}
             className="form-control-input w-full p-2 border border-neutral-400 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none resize-none"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -114,63 +118,63 @@ const FundRiserForm = () => {
         </div>
 
         {/* Targeted Contribution */}
-        <div className="form-control my-1">
-          <label className="text-sm text-gray-700">
-            Targeted Contribution Amount :
-          </label>
-          <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
-            <input
-              type="number"
-              placeholder="Type here"
-              className="flex-1 p-2 focus:outline-none focus:ring-0"
-              value={targetedContributionAmount}
-              onChange={(e) => setTargetedContributionAmount(e.target.value)}
-              onKeyPress={handleInputValidation} // Add validation for input
-              required
-            />
-            <div className="flex items-center gap-1 pl-2 pr-3">
-              <FaEthereum size={18} className="text-indigo-600" />
-              <span className="font-semibold text-gray-700">ETH</span>
+            <div className="form-control my-1">
+              <label className="text-sm text-gray-700">
+                Targeted Contribution Amount :
+              </label>
+              <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
+                <input
+                  type="number"
+                  placeholder="Enter total funding goal in ETH"
+                  className="flex-1 p-2 focus:outline-none focus:ring-0"
+                  value={targetedContributionAmount}
+                  onChange={(e) => setTargetedContributionAmount(e.target.value)}
+                  onKeyPress={handleInputValidation}
+                  required
+                />
+                <div className="flex items-center gap-1 pl-2 pr-3">
+                  <FaEthereum size={18} className="text-indigo-600" />
+                  <span className="font-semibold text-gray-700">ETH</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Minimum Contribution */}
-        <div className="form-control my-1">
-          <label className="text-sm text-gray-700">
-            Minimum Contribution Amount :
-          </label>
-          <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
-            <input
-              type="number"
-              placeholder="Type here"
-              className="flex-1 p-2 focus:outline-none focus:ring-0"
-              value={minimumContributionAmount}
-              onChange={(e) => setMinimumContributionAmount(e.target.value)}
-              onKeyPress={handleInputValidation} // Add validation for input
-              required
-            />
-            <div className="flex items-center gap-1 pl-2 pr-3">
-              <FaEthereum size={18} className="text-indigo-600" />
-              <span className="font-semibold text-gray-700">ETH</span>
+            {/* Minimum Contribution */}
+            <div className="form-control my-1">
+              <label className="text-sm text-gray-700">
+                Minimum Contribution Amount :
+              </label>
+              <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
+                <input
+                  type="number"
+                  placeholder="Enter minimum contribution amount in ETH"
+                  className="flex-1 p-2 focus:outline-none focus:ring-0"
+                  value={minimumContributionAmount}
+                  onChange={(e) => setMinimumContributionAmount(e.target.value)}
+                  onKeyPress={handleInputValidation}
+                  required
+                />
+                <div className="flex items-center gap-1 pl-2 pr-3">
+                  <FaEthereum size={18} className="text-indigo-600" />
+                  <span className="font-semibold text-gray-700">ETH</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Deadline */}
-        <div className="form-control date-picker my-1">
-          <label className="text-sm text-gray-700">Deadline :</label>
-          <input
-            type="date"
-            placeholder="Type here"
-            className="form-control-input border-neutral-400 focus:ring-neutral-200"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-            required
-          />
-        </div>
+            <div className="form-control date-picker my-1">
+              <label className="text-sm text-gray-700">Deadline :</label>
+              <input
+                type="date"
+                placeholder="Select campaign end date"
+                className="form-control-input border-neutral-400 focus:ring-neutral-200"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+                required
+                min={today}
+              />
+            </div>
 
-        {/* Submit Button */}
+            {/* Submit Button */}
         <button
           className="p-2 w-full bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           disabled={btnLoading}
