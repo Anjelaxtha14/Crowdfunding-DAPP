@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useDispatch, useSelector } from 'react-redux'
 import { contribute, createWithdrawRequest } from '../redux/interactions';
 import { etherToWei } from '../helper/helper';
-import { toastSuccess,toastError } from '../helper/toastMessage'
+import { toastSuccess,toastError } from '../helper/toastMessage';
+import { FaBullseye, FaCoins, FaHandHoldingUsd } from "react-icons/fa";
 
 const colorMaker = (state) =>{
     if(state === 'Fundraising'){
@@ -76,71 +77,119 @@ const FundRiserCard = ({props,pushWithdrawRequests}) => {
   }
 
   return (
-    <div className="card relative overflow-hidden my-4">
-    <div className={`ribbon ${colorMaker(props.state)}`}>{props.state}</div>
-    <Link href={`/project-details/${props.address}`} >
-      <h1 className="font-sans text-xl text-gray font-semibold hover:text-sky-500 hover:cursor-pointer">{props.title}</h1>
-    </Link>
-    <p className="font-sans text-sm text-stone-800 tracking-tight">{props.description}</p>
-    <div className="flex flex-col lg:flex-row">
-      <div className="inner-card my-6 w-full lg:w-2/5">
-        <p className="text-md font-bold font-sans text-gray">Targeted contribution</p>
-        <p className="text-sm font-bold font-sans text-gray-600 ">{props.goalAmount} ETH </p>
-        <p className="text-md font-bold font-sans text-gray">Deadline</p>
-        <p className="text-sm font-bold font-sans text-gray-600 ">{props.deadline}</p>
+    <div className="relative my-6 mx-4 bg-indigo-400 text-white rounded-2xl shadow-2xl p-6">
+      {/* Top Part */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">{props.title}</h1>
+        <span className="bg-pink-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md">
+          {props.state}
+        </span>
       </div>
-      <div className="inner-card my-6 w-full lg:w-3/5">
-        {
-          props.state !== "Successful" ?
-          <>
-            <label className="text-sm text-gray-700 font-semibold">Contribution amount :</label>
-            <div className="flex flex-row">
-              <input type="number" placeholder="Type here" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={btnLoader === props.address} className="input rounded-l-md" />
-            
-              <button className="button" 
-              onClick={()=>contributeAmount(props.address,props.minContribution)}
-              disabled={btnLoader === props.address}
-              >
-                {btnLoader === props.address?"Loading...":"Contribute"}
-              </button>
-    
-            </div>
-            <p className="text-sm text-red-600"> <span className="font-bold">NOTE : </span> Minimum contribution is {props.minContribution} ETH </p>
-          </>
-          :
-          <>
-            <p className="text-md font-bold font-sans text-gray">Contract balance</p>
-            <p className="text-sm font-bold font-sans text-gray-600 ">{props.contractBalance} ETH </p>
 
-            {
-              props.creator === account?
-              <>
-              <label className="text-sm text-gray-700 font-semibold">Withdraw request :</label>
-              <div className="flex flex-row">
-                <input type="number" placeholder="Type here" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={btnLoader === props.address} className="input rounded-l-md" />
-                <button className="button" onClick={()=>requestForWithdraw(props.address)}>
-                  {btnLoader === props.address?"Loading...":"Withdraw"}
-                </button>
-              </div>
-            </>
-            :""
-            }
+      {/* Description */}
+      <p className="text-base text-indigo-100 font-medium mb-8">
+        {props.description}
+      </p>
 
-          </>
-        }
-      </div>
-    </div>
-
-    {
-      props.state !== "Successful" ?
-        <div className="w-full bg-gray-200 rounded-full">
-          <div className="progress" style={{ width: `${props.progress}%` }}> {props.progress}% </div>
+      {/* Amounts Section */}
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="flex items-center space-x-3 bg-indigo-500 p-4 rounded-lg shadow">
+          <FaBullseye className="text-white text-2xl" />
+          <div>
+            <p className="text-xs tracking-wide">Target</p>
+            <p className="font-bold text-lg">{props.goalAmount} ETH</p>
+          </div>
         </div>
-    :""
-    }
+        <div className="flex items-center space-x-3 bg-indigo-500 p-4 rounded-lg shadow">
+          <FaCoins className="text-white text-2xl" />
+          <div>
+            <p className="text-xs tracking-wide">Collected</p>
+            <p className="font-bold text-lg">{props.contractBalance} ETH</p>
+          </div>
+        </div>
+      </div>
 
-  </div>
-  )
+      {/* Contribution Section */}
+      {props.state !== "Successful" && (
+        <>
+          <div className="mb-6">
+            <label className="block text-sm font-semibold mb-2">
+              Contribution Amount
+            </label>
+            <div className="flex">
+              <input
+                type="number"
+                placeholder="Enter amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                disabled={btnLoader === props.address}
+                className="w-full p-3 rounded-l-lg focus:outline-none text-gray-800"
+              />
+              <button
+                className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 rounded-r-lg font-semibold"
+                onClick={() =>
+                  contributeAmount(props.address, props.minContribution)
+                }
+                disabled={btnLoader === props.address}
+              >
+                <FaHandHoldingUsd className="text-xl" />
+                <span>
+                  {btnLoader === props.address ? "Loading..." : "Contribute"}
+                </span>
+              </button>
+            </div>
+            <p className="text-xs text-yellow-100 mt-2">
+              <span className="font-bold">NOTE:</span> Minimum{" "}
+              {props.minContribution} ETH
+            </p>
+          </div>
+
+          {/* Progress Status (Original Style) */}
+          <div className="relative w-full bg-gray-200 rounded-lg h-6 mt-6 overflow-hidden">
+            {/* Progress Background */}
+            <div
+              className="bg-green-400 h-full rounded-lg transition-all duration-500"
+              style={{ width: `${props.progress}%` }}
+            ></div>
+
+            {/* Centered Progress Text */}
+            <div className="absolute inset-0 flex items-center justify-center text-indigo-900 text-sm font-bold">
+              {props.progress}%
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* If successful and creator */}
+      {props.state === "Successful" && props.creator === account && (
+        <div className="mt-8">
+          <label className="block text-sm font-semibold mb-2">
+            Withdraw Request
+          </label>
+          <div className="flex">
+            <input
+              type="number"
+              placeholder="Enter amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              disabled={btnLoader === props.address}
+              className="w-full p-3 rounded-l-lg focus:outline-none text-gray-800"
+            />
+            <button
+              className="flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 rounded-r-lg font-semibold"
+              onClick={() => requestForWithdraw(props.address)}
+              disabled={btnLoader === props.address}
+            >
+              <FaHandHoldingUsd className="text-xl" />
+              <span>
+                {btnLoader === props.address ? "Loading..." : "Withdraw"}
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default FundRiserCard
