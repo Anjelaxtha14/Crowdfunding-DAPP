@@ -81,7 +81,7 @@ const FundRiserCard = ({props,pushWithdrawRequests}) => {
       {/* Top Part */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">{props.title}</h1>
-        <span className="bg-pink-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md">
+        <span className="bg-pink-400 text-white px-4 py-1 rounded-lg text-sm font-semibold shadow-md">
           {props.state}
         </span>
       </div>
