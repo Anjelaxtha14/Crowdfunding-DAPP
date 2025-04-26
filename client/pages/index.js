@@ -28,6 +28,31 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const { username, password } = formData;
+
+  //   if (username.trim() === "" || password.trim() === "") {
+  //     toastError("Username and Password are required!");
+  //     return;
+  //   }
+
+  //   try {
+  //     toastSuccess(
+  //       isRegister ? "Registration successful!" : "Login successful!"
+  //     );
+
+  //     const onSuccess = async () => {
+  //       await loadAccount(web3, dispatch);
+  //       router.push("/dashboard");
+  //     };
+  //     connectWithWallet(onSuccess);
+  //   } catch (error) {
+  //     toastError("Something went wrong. Try again.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,16 +63,39 @@ export default function Login() {
       return;
     }
 
-    try {
-      toastSuccess(
-        isRegister ? "Registration successful!" : "Login successful!"
-      );
+    const url = isRegister
+      ? "http://localhost:5000/api/auth/register"
+      : "http://localhost:5000/api/auth/login";
 
-      const onSuccess = async () => {
-        await loadAccount(web3, dispatch);
-        router.push("/dashboard");
-      };
-      connectWithWallet(onSuccess);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email:username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toastSuccess(
+          isRegister ? "Registration successful!" : "Login successful!"
+        );
+
+        // Store the token and userId
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+
+        const onSuccess = async () => {
+          await loadAccount(web3, dispatch);
+          router.push("/dashboard");
+        };
+
+        connectWithWallet(onSuccess);
+      } else {
+        toastError(data.message || "Something went wrong. Try again.");
+      }
     } catch (error) {
       toastError("Something went wrong. Try again.");
     }
