@@ -63,12 +63,30 @@ const FundRiserForm = () => {
     );
   };
 
+  const handleInputValidation = (e) => {
+    const charCode = e.charCode || e.keyCode;
+    if (
+      (charCode >= 48 && charCode <= 57) ||
+      charCode === 8 || 
+      charCode === 46 
+    ) {
+      return true;
+    }
+    e.preventDefault();
+  };
+
+
   return (
     <>
       <h1 className="font-sans font-bold text-xl">
-        Start a fund riser for free
+        Start a Fundraiser for Free
       </h1>
-      <form onSubmit={(e) => riseFund(e)}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          riseFund(e);
+        }}
+      >
         <div className="form-control my-1">
           <label className="text-sm text-gray-700">Title :</label>
           <input
@@ -81,11 +99,14 @@ const FundRiserForm = () => {
           />
         </div>
 
-        <div className="form-control my-1">
-          <label className="text-sm text-gray-700">Description :</label>
+        <div className="form-control">
+          <label className="text-sm text-gray-700 mb-1 block">
+            Description :
+          </label>
           <textarea
-            placeholder="Type here"
-            className="form-control-input border-neutral-400 focus:ring-neutral-200"
+            placeholder="Briefly describe your project and how the funds will be used..."
+            rows={4}
+            className="form-control-input w-full p-2 border border-neutral-400 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none resize-none"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
@@ -95,7 +116,7 @@ const FundRiserForm = () => {
         {/* Targeted Contribution */}
         <div className="form-control my-1">
           <label className="text-sm text-gray-700">
-            Targeted contribution amount :
+            Targeted Contribution Amount :
           </label>
           <div className="flex items-center border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
             <input
@@ -104,6 +125,7 @@ const FundRiserForm = () => {
               className="flex-1 p-2 focus:outline-none focus:ring-0"
               value={targetedContributionAmount}
               onChange={(e) => setTargetedContributionAmount(e.target.value)}
+              onKeyPress={handleInputValidation} // Add validation for input
               required
             />
             <div className="flex items-center gap-1 pl-2 pr-3">
@@ -116,7 +138,7 @@ const FundRiserForm = () => {
         {/* Minimum Contribution */}
         <div className="form-control my-1">
           <label className="text-sm text-gray-700">
-            Minimum contribution amount :
+            Minimum Contribution Amount :
           </label>
           <div className="flex items-center bg-gray-100 border border-neutral-400 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-200">
             <input
@@ -125,6 +147,7 @@ const FundRiserForm = () => {
               className="flex-1 p-2 focus:outline-none focus:ring-0"
               value={minimumContributionAmount}
               onChange={(e) => setMinimumContributionAmount(e.target.value)}
+              onKeyPress={handleInputValidation} // Add validation for input
               required
             />
             <div className="flex items-center gap-1 pl-2 pr-3">
@@ -152,7 +175,7 @@ const FundRiserForm = () => {
           className="p-2 w-full bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           disabled={btnLoading}
         >
-          {btnLoading ? "Loading..." : "Rise fund"}
+          {btnLoading ? "Loading..." : "Rise Fund"}
         </button>
       </form>
     </>
