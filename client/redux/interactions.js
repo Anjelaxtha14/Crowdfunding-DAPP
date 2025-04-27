@@ -172,14 +172,26 @@ export const withdrawAmount = async (web3,dispatch,data,onSuccess,onError) =>{
 }
 
 //Get my contributions
-export const getMyContributionList = async(crowdFundingContract,account) =>{
-  const getContributions = await crowdFundingContract.getPastEvents("ContributionReceived",{
-    filter: { contributor: account },
-    fromBlock: 0,
-    toBlock: 'latest'
-  })
-  return groupContributionByProject(getContributions);
-}
+export const getMyContributionList = async (crowdFundingContract, account) => {
+  const getContributions = await crowdFundingContract.getPastEvents(
+    "ContributionReceived",
+    {
+      filter: { contributor: account },
+      fromBlock: 0,
+      toBlock: "latest",
+    }
+  );
+
+  return getContributions.map((event) => {
+    return {
+      projectAddress: event.returnValues.projectAddress,
+      contributor: event.returnValues.contributor,
+      amount: event.returnValues.contributedAmount,
+      title: event.returnValues.title,
+      description: event.returnValues.description,
+    };
+  });
+};
 
 export const logout = async (dispatch) => {
   // Reset the state by dispatching the logout action

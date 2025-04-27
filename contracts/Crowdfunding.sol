@@ -26,8 +26,11 @@ event ProjectStarted(
 event ContributionReceived(
    address projectAddress,
    uint256 contributedAmount,
-   address indexed contributor
+   address indexed contributor,
+   string title,
+   string description
 );
+
 
  Project[] private projects;
 
@@ -72,17 +75,22 @@ function returnAllProjects() external view returns(Project[] memory){
 // @dev User can contribute
 // @return null
 
-function contribute(address _projectAddress) public payable{
-
+function contribute(address _projectAddress) public payable {
    uint256 minContributionAmount = Project(_projectAddress).minimumContribution();
    Project.State projectState = Project(_projectAddress).state();
    require(projectState == Project.State.Fundraising,'Invalid state');
    require(msg.value >= minContributionAmount,'Contribution amount is too low !');
-   // Call function
+
+   // Call function to contribute
    Project(_projectAddress).contribute{value:msg.value}(msg.sender);
-   // Trigger event 
-   emit ContributionReceived(_projectAddress,msg.value,msg.sender);
+
+   // Fetch title and description from Project contract
+   (,,,,,, string memory projectTitle, string memory projectDesc,,) = Project(_projectAddress).getProjectDetails();
+
+   // Trigger updated event
+   emit ContributionReceived(_projectAddress, msg.value, msg.sender, projectTitle, projectDesc);
 }
+
 
 }
 
