@@ -1,89 +1,130 @@
-import React,{useState} from 'react'
-import Link from "next/link";
-import { useDispatch, useSelector } from 'react-redux'
-import { contribute, createWithdrawRequest } from '../redux/interactions';
-import { etherToWei } from '../helper/helper';
-import { toastSuccess,toastError } from '../helper/toastMessage';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { contribute, createWithdrawRequest } from "../redux/interactions";
+import { etherToWei } from "../helper/helper";
+import { toastSuccess, toastError } from "../helper/toastMessage";
 import { FaBullseye, FaCoins, FaHandHoldingUsd } from "react-icons/fa";
 
-const colorMaker = (state) =>{
-    if(state === 'Fundraising'){
-        return 'bg-cyan-500'
-    }else if(state === 'Expired'){
-        return 'bg-red-500'
-    }else{
-        return 'bg-emerald-500'
-    }
-}
+const getStateColor = (state) => {
+  switch (state) {
+    case "Fundraising":
+      return "bg-cyan-500";
+    case "Pending":
+      return "bg-yellow-500";
+    case "Successful":
+      return "bg-emerald-500";
+    default:
+      return "bg-gray-500";
+  }
+};
 
-const FundRiserCard = ({props,pushWithdrawRequests}) => {
+const getCategoryColor = (category) => {
+  switch (category) {
+    case "Technology":
+      return "bg-blue-500";
+    case "Health":
+      return "bg-green-500";
+    case "Education":
+      return "bg-purple-500";
+    case "Environment":
+      return "bg-teal-500";
+    case "Charity":
+    default:
+      return "bg-orange-500";
+  }
+};
 
-  const [btnLoader, setBtnLoader] = useState(false)
-  const [amount, setAmount] = useState(0)
+const FundRiserCard = ({ props, pushWithdrawRequests }) => {
+  const [btnLoader, setBtnLoader] = useState(false);
+  const [amount, setAmount] = useState(0);
   const dispatch = useDispatch();
-  const crowdFundingContract = useSelector(state=>state.fundingReducer.contract)
-  const account = useSelector(state=>state.web3Reducer.account)
-  const web3 = useSelector(state=>state.web3Reducer.connection)
+  const crowdFundingContract = useSelector(
+    (state) => state.fundingReducer.contract
+  );
+  const account = useSelector((state) => state.web3Reducer.account);
+  const web3 = useSelector((state) => state.web3Reducer.connection);
 
-  const contributeAmount = (projectId,minContribution) =>{
-    if(parseFloat(amount) < parseFloat(minContribution)){
+  const contributeAmount = (projectId, minContribution) => {
+    if (parseFloat(amount) < parseFloat(minContribution)) {
       toastError(`Minimum contribution amount is ${minContribution}`);
       return;
     }
 
-    setBtnLoader(projectId)
+    setBtnLoader(projectId);
     const contributionAmount = etherToWei(amount);
 
     const data = {
-      contractAddress:projectId,
-      amount:contributionAmount,
-      account:account
-    }
-    const onSuccess = () =>{
-      setBtnLoader(false)
-      setAmount(0)
-      toastSuccess(`Successfully contributed ${amount} ETH`)
-    }
-    const onError = (message) =>{
-      setBtnLoader(false)
-      toastError(message)
-    }
-    contribute(crowdFundingContract,data,dispatch,onSuccess,onError)
-  }
+      contractAddress: projectId,
+      amount: contributionAmount,
+      account: account,
+    };
+    const onSuccess = () => {
+      setBtnLoader(false);
+      setAmount(0);
+      toastSuccess(`Successfully contributed ${amount} ETH`);
+    };
+    const onError = (message) => {
+      setBtnLoader(false);
+      toastError(message);
+    };
+    contribute(crowdFundingContract, data, dispatch, onSuccess, onError);
+  };
 
-  const requestForWithdraw = (projectId) =>{
-    setBtnLoader(projectId)
+  const requestForWithdraw = (projectId) => {
+    setBtnLoader(projectId);
     const contributionAmount = etherToWei(amount);
 
     const data = {
-      description:`${amount} ETH requested for withdraw`,
-      amount:contributionAmount,
-      recipient:account,
-      account:account
-    }
-    const onSuccess = (data) =>{
-      setBtnLoader(false)
-      setAmount(0)
-      if(pushWithdrawRequests){
-        pushWithdrawRequests(data)
+      description: `${amount} ETH requested for withdraw`,
+      amount: contributionAmount,
+      recipient: account,
+      account: account,
+    };
+    const onSuccess = (data) => {
+      setBtnLoader(false);
+      setAmount(0);
+      if (pushWithdrawRequests) {
+        pushWithdrawRequests(data);
       }
-      toastSuccess(`Successfully requested for withdraw ${amount} ETH`)
-    }
-    const onError = (message) =>{
-      setBtnLoader(false)
-      toastError(message)
-    }
-    createWithdrawRequest(web3,projectId,data,onSuccess,onError)
-  }
+      toastSuccess(`Successfully requested for withdraw ${amount} ETH`);
+    };
+    const onError = (message) => {
+      setBtnLoader(false);
+      toastError(message);
+    };
+    createWithdrawRequest(web3, projectId, data, onSuccess, onError);
+  };
+
+  const stateColor = getStateColor(props.state);
+  const categoryColor = getCategoryColor(props.category || "Charity");
 
   return (
     <div className="relative my-6 mx-4 bg-indigo-400 text-white rounded-2xl shadow-2xl p-6">
       {/* Top Part */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{props.title}</h1>
-        <span className="bg-pink-400 text-white px-4 py-1 rounded-lg text-sm font-semibold shadow-md">
-          {props.state}
-        </span>
+
+      <div className="flex justify-end items-center mb-6">
+        <div className="flex gap-2">
+          <span
+            className={`${stateColor} text-white px-4 py-1 rounded-lg text-sm font-semibold shadow-md`}
+          >
+            {props.state}
+          </span>
+          <span
+            className={`${categoryColor} text-white px-4 py-1 rounded-lg text-sm font-semibold shadow-md`}
+          >
+            {props.category || "Charity"}
+          </span>
+        </div>
+      </div>
+      <div>
+        <h1
+          className="text-xl sm:text-2xl font-bold truncate"
+          title={props.title}
+        >
+          {props.title.length > 30
+            ? props.title.substring(0, 30) + "..."
+            : props.title}
+        </h1>
       </div>
 
       {/* Description */}
@@ -190,6 +231,6 @@ const FundRiserCard = ({props,pushWithdrawRequests}) => {
       )}
     </div>
   );
-}
+};
 
-export default FundRiserCard
+export default FundRiserCard;

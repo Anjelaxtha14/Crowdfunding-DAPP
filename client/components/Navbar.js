@@ -37,24 +37,22 @@ const Navbar = () => {
               <div className="hidden lg:flex space-x-8">
                 <Link href="/dashboard">
                   <span
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
                       router.pathname === "/dashboard"
                         ? "border-indigo-500 text-gray-900"
                         : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                     }`}
-                    cursor-pointer
                   >
                     Dashboard
                   </span>
                 </Link>
                 <Link href="/my-contributions">
                   <span
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
                       router.pathname === "/my-contributions"
                         ? "border-indigo-500 text-gray-900"
                         : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                     }`}
-                    cursor-pointer
                   >
                     My Contributions
                   </span>
@@ -103,9 +101,9 @@ const Navbar = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h16"
                   ></path>
                 </svg>

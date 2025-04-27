@@ -22,8 +22,9 @@ const FundRiserForm = () => {
   const [minimumContributionAmount, setMinimumContributionAmount] =
     useState("");
   const [deadline, setDeadline] = useState("");
+  const [category, setCategory] = useState("Technology"); // Default category
   const [btnLoading, setBtnLoading] = useState(false);
-   const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const riseFund = (e) => {
     e.preventDefault();
@@ -37,7 +38,8 @@ const FundRiserForm = () => {
       setTargetedContributionAmount("");
       setMinimumContributionAmount("");
       setDeadline("");
-      toastSuccess("Fund rising started 🎉");
+      setCategory("Technology"); // Reset category
+      toastSuccess("Fund raising started 🎉");
     };
 
     const onError = (error) => {
@@ -51,6 +53,7 @@ const FundRiserForm = () => {
       targetContribution: etherToWei(targetedContributionAmount),
       projectTitle: title,
       projectDesc: description,
+      projectCategory: category, // Include category in the data
       account: account,
     };
 
@@ -68,14 +71,13 @@ const FundRiserForm = () => {
     const charCode = e.charCode || e.keyCode;
     if (
       (charCode >= 48 && charCode <= 57) ||
-      charCode === 8 || 
-      charCode === 46 
+      charCode === 8 ||
+      charCode === 46
     ) {
       return true;
     }
     e.preventDefault();
   };
-
 
   return (
     <>
@@ -115,6 +117,23 @@ const FundRiserForm = () => {
             onChange={(e) => setDescription(e.target.value)}
             required
           ></textarea>
+        </div>
+
+        {/* Category Dropdown */}
+        <div className="form-control my-1">
+          <label className="text-sm text-gray-700">Category :</label>
+          <select
+            className="form-control-input border-neutral-400 focus:ring-neutral-200"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value="Technology">Technology</option>
+            <option value="Health">Health</option>
+            <option value="Education">Education</option>
+            <option value="Environment">Environment</option>
+            <option value="Charity">Charity</option>
+          </select>
         </div>
 
         {/* Targeted Contribution */}
