@@ -4,7 +4,7 @@ import { contribute, createWithdrawRequest } from "../redux/interactions";
 import { etherToWei } from "../helper/helper";
 import { toastSuccess, toastError } from "../helper/toastMessage";
 import { FaBullseye, FaCoins, FaHandHoldingUsd } from "react-icons/fa";
-
+import Link from "next/link"; 
 const getStateColor = (state) => {
   switch (state) {
     case "Fundraising":
@@ -117,14 +117,16 @@ const FundRiserCard = ({ props, pushWithdrawRequests }) => {
         </div>
       </div>
       <div>
-        <h1
-          className="text-xl sm:text-2xl font-bold truncate"
-          title={props.title}
-        >
-          {props.title.length > 30
-            ? props.title.substring(0, 30) + "..."
-            : props.title}
-        </h1>
+        <Link href={`/project-details/${props.address}`}>
+          <h1
+            className="text-xl sm:text-2xl font-bold truncate cursor-pointer"
+            title={props.title}
+          >
+            {props.title.length > 30
+              ? props.title.substring(0, 30) + "..."
+              : props.title}
+          </h1>
+        </Link>
       </div>
 
       {/* Description */}
