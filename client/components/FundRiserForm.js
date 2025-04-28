@@ -22,7 +22,7 @@ const FundRiserForm = () => {
   const [minimumContributionAmount, setMinimumContributionAmount] =
     useState("");
   const [deadline, setDeadline] = useState("");
-  const [category, setCategory] = useState("Technology"); // Default category
+  const [category, setCategory] = useState("Charity"); // Default category
   const [btnLoading, setBtnLoading] = useState(false);
   const today = new Date().toISOString().split("T")[0];
 
@@ -53,7 +53,7 @@ const FundRiserForm = () => {
       targetContribution: etherToWei(targetedContributionAmount),
       projectTitle: title,
       projectDesc: description,
-      projectCategory: category, // Include category in the data
+      projectCategory: category, 
       account: account,
     };
 
@@ -128,11 +128,11 @@ const FundRiserForm = () => {
             onChange={(e) => setCategory(e.target.value)}
             required
           >
+            <option value="Charity">Charity</option>
             <option value="Technology">Technology</option>
             <option value="Health">Health</option>
             <option value="Education">Education</option>
             <option value="Environment">Environment</option>
-            <option value="Charity">Charity</option>
           </select>
         </div>
 
